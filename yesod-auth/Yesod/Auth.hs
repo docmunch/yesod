@@ -8,6 +8,7 @@
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Yesod.Auth
     ( -- * Subsite
@@ -413,8 +414,9 @@ type YesodAuthPersist master =
 -- > AuthEntity MySite ~ User
 --
 -- Since 1.2.0
-type AuthEntity master = KeyEntity (AuthId master)
-
+-- type AuthEntity master = KeyEntity (AuthId master)
+type family AuthEntity master :: * where
+    AuthEntity master = KeyEntity (AuthId master)
 -- | Similar to 'maybeAuthId', but redirects to a login page if user is not
 -- authenticated.
 --
